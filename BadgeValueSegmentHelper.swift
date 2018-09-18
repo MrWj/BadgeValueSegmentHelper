@@ -78,7 +78,20 @@ class BadgeValueSegmentHelperCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+    override func layoutSubviews() {
+        
+        
+        titleLabel.snp.remakeConstraints { (maker) in
+            maker.edges.equalToSuperview()
+        }
+        badgeLabel.snp.remakeConstraints { (maker) in
+            maker.top.equalTo(badgeTopSapce)
+            maker.height.equalTo(badgeHeight)
+            maker.width.greaterThanOrEqualTo(23)
+            //            maker.centerX.equalTo(self.snp.centerX).offset(35)
+            maker.right.equalTo(-7)
+        }
+    }
     //MARK: - privat Method
     fileprivate func setUp(){
         self.backgroundColor = UIColor.white
@@ -98,20 +111,7 @@ class BadgeValueSegmentHelperCell: UICollectionViewCell {
         self.addSubview(badgeLabel)
     }
     
-    override func layoutSubviews() {
-        
-        
-        titleLabel.snp.remakeConstraints { (maker) in
-            maker.edges.equalToSuperview()
-        }
-        badgeLabel.snp.remakeConstraints { (maker) in
-            maker.top.equalTo(badgeTopSapce)
-            maker.height.equalTo(badgeHeight)
-            maker.width.greaterThanOrEqualTo(23)
-            //            maker.centerX.equalTo(self.snp.centerX).offset(35)
-            maker.right.equalTo(-7)
-        }
-    }
+   
 }
 
 
@@ -119,17 +119,17 @@ class SegmentCollectionView: UICollectionView {
 
 }
 
-extension SegmentCollectionView{
-func getAssociatedObject<T>(ofType: T.Type, key: UnsafeRawPointer,
-                                defaultValue: @autoclosure () -> T) -> T {
-        
-        // or: return objc_getAssociatedObject(self, key) as? T ?? defaultValue()
-        guard let actualValue = objc_getAssociatedObject(self, key) as? T else {
-            return defaultValue()
-        }
-        return actualValue
-    }
-}
+//extension SegmentCollectionView{
+//func getAssociatedObject<T>(ofType: T.Type, key: UnsafeRawPointer,
+//                                defaultValue: @autoclosure () -> T) -> T {
+//
+//        // or: return objc_getAssociatedObject(self, key) as? T ?? defaultValue()
+//        guard let actualValue = objc_getAssociatedObject(self, key) as? T else {
+//            return defaultValue()
+//        }
+//        return actualValue
+//    }
+//}
 class BadgeValueSegmentHelper: UIView {
     //    var didScrollView:Bool = false//选中后是否滚动
     var countChange = 0;
@@ -204,7 +204,7 @@ class BadgeValueSegmentHelper: UIView {
             valueChange!(indexRow)
         }
     }
-    
+    //
     public func setX(x:CGFloat){
         self.lineView?.x = x
     }
